@@ -2,7 +2,6 @@ import OlympEvent from "../domain/event"
 import { autoInjectable } from "tsyringe";
 import EventModel, { IEventDB } from "../database/schemas/event.schema";
 import { eventFromDB } from "../database/schemas/eventConverter";
-import { ObjectId } from "mongodb";
 
 @autoInjectable()
 export default class EventRepository{

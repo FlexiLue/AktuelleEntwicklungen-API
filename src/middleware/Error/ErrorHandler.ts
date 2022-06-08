@@ -6,7 +6,7 @@ export const errorLogger = (err: Error, req: Request, res: Response, next: NextF
     next(err) // calling next middleware
 }
 
-export const errorResponder = (err: Error, req: Request, res: Response, next: NextFunction) => {
+export const errorResponder = (err: Error, _: Request, res: Response, next: NextFunction) => {
     switch(err.name){
         case "MongoServerError":
             return res.status(409).send({message: "MongoServerError occured"})
@@ -17,5 +17,5 @@ export const errorResponder = (err: Error, req: Request, res: Response, next: Ne
 }
 
 export const invalidPathHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-    res.status(500).send({message: err.name})
+    res.status(500).send({message: err.message})
 }

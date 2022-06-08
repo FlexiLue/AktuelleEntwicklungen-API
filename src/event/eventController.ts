@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { autoInjectable } from "tsyringe";
 import OlympEvent from "../domain/event";
+import { validateRessource } from "../middleware/validation/validationHandler";
+import { createEventSchema } from "../Schema/Event.Schema";
 import EventService from "./eventService";
 
 @autoInjectable()
@@ -30,7 +32,7 @@ export default class EventController {
             }
         })
 
-        this.router.put('/', async (_req: Request, res: Response, next: NextFunction) => {
+        this.router.put('/', validateRessource(createEventSchema), async (_req: Request, res: Response, next: NextFunction) => {
             try {
                 let result: OlympEvent = await this.eventService.addOrUpdateEvent(_req)
                 res.location('/events/' + result._id)

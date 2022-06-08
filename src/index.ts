@@ -5,7 +5,7 @@ import expressBasicAuth, { IBasicAuthedRequest } from 'express-basic-auth'
 import Authorizer from './auth';
 import EventController from './event/eventController';
 import mongoose from 'mongoose';
-import { errorLogger, errorResponder, invalidPathHandler } from './Error/ErrorHandler';
+import { errorLogger, errorResponder, invalidPathHandler } from './middleware/Error/ErrorHandler';
 
 const port = 5000;
 
