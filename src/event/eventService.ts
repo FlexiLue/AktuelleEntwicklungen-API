@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { autoInjectable }from "tsyringe";
+import { eventFromDB } from "../database/schemas/eventConverter";
 import OlympEvent from "../domain/event";
 import EventRepository from "./eventRepository";
 
@@ -11,25 +12,32 @@ export default class EventService {
         this.eventRepository = eventRepository
     }
 
-    getEvents(): Promise<Array<OlympEvent>> {
-        return this.eventRepository.getAllEvents();
+    async getEvents(): Promise<Array<OlympEvent>> {
+        let events = await this.eventRepository.getAllEvents();
+        return events.map(event => {
+            return eventFromDB(event)
+        });
     }
 
-    getEventById(id: string): Promise<OlympEvent>{
-        return this.eventRepository.getEventById(id)
+    async getEventById(id: string): Promise<OlympEvent | null>{
+        let event = await this.eventRepository.getEventById(id)
+        if(event)
+            return eventFromDB(event)
+        else
+            return null
     }
 
-    async addOrUpdateEvent(_req: Request): Promise<OlympEvent> {
-        const { name, description, games, _id } = _req.body
-        const event = new OlympEvent(name, description, games, _id)
-
-        if(await (this.eventRepository.getEventById(_id)) != null){
-            const result = this.eventRepository.updateEvent(event);
-            return result
+    async addOrUpdateEvent(_req: Request): Promise<OlympEvent | null> {
+        let {name, description, games, _id } = _req.body
+        let result = null
+        if(_id){
+            const event = new OlympEvent(name, description, games, _id)
+            result = await this.eventRepository.updateEvent(event)
         } else {
-            const result = this.eventRepository.addEvent(event)
-            return result
+            const event = new OlympEvent(name, description, games, _id)
+            result = await this.eventRepository.addEvent(event)
         }
+        return result ? eventFromDB(result) : null
     }
 
     async deleteOne(_req: Request): Promise<boolean> {

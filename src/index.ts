@@ -1,4 +1,4 @@
-import express, { Request } from 'express';
+import express from 'express';
 import "reflect-metadata";
 import {container} from "tsyringe";
 import expressBasicAuth, { IBasicAuthedRequest } from 'express-basic-auth'

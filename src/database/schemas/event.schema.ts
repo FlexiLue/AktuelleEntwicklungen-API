@@ -2,7 +2,6 @@ import { Schema, Types} from 'mongoose'
 import mongoose from 'mongoose'
 
 export interface IEventDB extends mongoose.Document{
-    _id: Schema.Types.ObjectId,
     name: string;
     description: string;
     games: Array<Types.ObjectId>

@@ -18,7 +18,11 @@ export default class EventController {
     public routes() {
         this.router.get('/:id', async (_req: Request, res: Response, next: NextFunction) =>{
             try {
-                res.send(await this.eventService.getEventById(_req.params.id))
+                let event: OlympEvent | null = await this.eventService.getEventById(_req.params.id)
+                if(event)
+                    res.send(event)
+                else
+                    res.sendStatus(404)
             } catch (err){
                 next(err)
             }
@@ -34,9 +38,13 @@ export default class EventController {
 
         this.router.put('/', validateRessource(createEventSchema), async (_req: Request, res: Response, next: NextFunction) => {
             try {
-                let result: OlympEvent = await this.eventService.addOrUpdateEvent(_req)
-                res.location('/events/' + result._id)
-                res.json(result)
+                let result = await this.eventService.addOrUpdateEvent(_req)
+                if(result){
+                    res.location('/events/' + result._id)
+                    res.json(result)
+                } else {
+                    res.sendStatus(400)
+                }
             } catch (err){
                 next(err)
             }
