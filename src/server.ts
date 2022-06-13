@@ -6,7 +6,7 @@ import Authorizer from "./auth";
 import EventController from "./event/eventController";
 import { errorLogger, errorResponder, invalidPathHandler } from "./middleware/Error/ErrorHandler";
 
-function createServer(){
+function createServer(eventController: EventController){
     const app  = express();
     app.use(express.json());
 
@@ -18,7 +18,7 @@ function createServer(){
         })
     )
 
-    const eventController = container.resolve(EventController);
+    //const eventController = container.resolve(EventController);
 
     app.use('/events', eventController.routes())
 
