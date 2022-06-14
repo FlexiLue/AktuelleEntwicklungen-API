@@ -30,11 +30,10 @@ export default class EventService {
     async addOrUpdateEvent(_req: Request): Promise<OlympEvent | null> {
         let {name, description, games, _id } = _req.body
         let result = null
+        const event = new OlympEvent(name, description, games, _id)
         if(_id){
-            const event = new OlympEvent(name, description, games, _id)
             result = await this.eventRepository.updateEvent(event)
         } else {
-            const event = new OlympEvent(name, description, games, _id)
             result = await this.eventRepository.addEvent(event)
         }
         return result ? eventFromDB(result) : null
