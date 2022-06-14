@@ -39,11 +39,18 @@ export default class EventController {
         this.router.put('/', validateRessource(createEventSchema), async (_req: Request, res: Response, next: NextFunction) => {
             try {
                 let result = await this.eventService.addOrUpdateEvent(_req)
-                if(result){
-                    res.location('/events/' + result._id)
-                    res.json(result)
+                if(_req.body._id){
+                    if(result){
+                        res.location('/events/' + result._id)
+                        res.status(200)
+                        res.json(result)
+                    }
                 } else {
-                    res.sendStatus(400)
+                    if(result){
+                        res.location('/events/' + result._id)
+                        res.status(201)
+                        res.json(result)
+                    }
                 }
             } catch (err){
                 next(err)
