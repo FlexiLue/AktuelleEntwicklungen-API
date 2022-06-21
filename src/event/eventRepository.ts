@@ -17,7 +17,7 @@ export default class EventRepository{
     }
 
     public async addEvent(event: OlympEvent): Promise<IEventDB> {
-        let dbEvent: IEventDB  = new EventModel({name: event.name, description: event.description, games: event.games, _id: event._id})
+        let dbEvent: IEventDB  = new EventModel({name: event.name, description: event.description, games: event.games})
         let result: IEventDB = await dbEvent.save();
         return result
     }
