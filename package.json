@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "test:watch": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "test:coverage": "jest --coverage",
+    "test:collectCoverage": "jest --collect-coverage"
   },
   "author": "",
   "license": "ISC",
