@@ -10,6 +10,7 @@ mongoose.connect('mongodb://localhost:27017/').catch(error => console.log(error)
 
 const eventController = container.resolve(EventController);
 
+
 const server = createServer(eventController)
 
 server.listen(port, () => console.log(`listening on port: ${port}`));
