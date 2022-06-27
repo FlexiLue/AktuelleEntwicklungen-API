@@ -17,6 +17,7 @@ export default class EventService {
         return events.map(event => {
             return eventFromDB(event)
         });
+        
     }
 
     async getEventById(id: string): Promise<OlympEvent | null>{
