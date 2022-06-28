@@ -56,6 +56,7 @@ describe("event routes", () => {
     describe("given authentication was provided", () => {
         describe("when GET /events get called", () => {
             it('should return a array of Event Objects', async () => {
+                
                 //@ts-ignore
                 const getAllEventsMock = jest.spyOn(eventRepository, 'getAllEvents').mockResolvedValue(eventsPayload);
 
